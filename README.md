@@ -1,5 +1,5 @@
 # AAV
-This repository contains a ROS2 package for an autonomous vehicle project, demonstrating GPS waypoint following using Nav2 and forwarding vehicle commands using CAN communication.
+This repository contains a ROS2 package for an autonomous vehicle project, demonstrating GPS navigation between two locations using custom scripts, open-source packages and CAN communication.
 
 ## Requirements
 1. Ensure ROS workspace is sourced
@@ -13,15 +13,15 @@ pip install -r requirements.txt
 ```
 
 3. Ensure that the following ROS2 packages are installed:
+* ublox
+* mapviz
+* velodyne
+* tile_map
+* twist_mux
+* mapviz_plugins
 * navigation 2
 * robot_localization
 * teleop-twist-keyboard
-* velodyne
-* ublox -- refer to additional resources
-* mapviz
-* mapviz_plugins
-* tile_map
-* twist_mux
 
 ## Installation
 1. Clone this repository into your ROS2 workspace
@@ -49,7 +49,7 @@ pip install -r requirements.txt
 
 ## Launch Packgae
 ```
-ros2 launch aav aav_bringup.launch.py
+ros2 launch av av_bringup.launch.py
 ```
 
 ## Additional Resources 

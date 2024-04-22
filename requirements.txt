@@ -1,0 +1,5 @@
+python-can
+tkinter
+serial
+geopy
+re

@@ -1,0 +1,48 @@
+# Compiled Python files
+*.pyc
+
+# Compiled C++ files
+*.so
+
+# Compiled executables
+/build/
+/bin/
+
+# Dependency directories
+/devel/
+/install/
+
+# Logs and debugging output
+/log/
+/logs/
+/debug/
+/debug.log
+
+# Build directories
+/.catkin_workspace/
+/.vscode/
+/.idea/
+
+# ROS-specific directories
+/.ros/
+/.rosws/
+/.rosinstall
+
+# Generated files and directories
+/CMakeLists.txt.user
+/build/
+
+# Ignore custom configuration files
+/ros/config/*.yaml
+/ros/config/*.launch
+
+# IDE-specific files
+*.swp
+*.swo
+*.sublime-workspace
+*.project
+*.tags
+.vscode/
+
+# System files
+.DS_Store

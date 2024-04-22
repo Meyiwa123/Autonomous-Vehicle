@@ -1,0 +1,15 @@
+twist_mux:
+  ros__parameters:
+    topics:
+      navigation:
+        topic   : cmd_vel
+        timeout : 0.5
+        priority: 10
+      flysky:
+        topic   : cmd_vel_flysky
+        timeout : 0.5
+        priority: 50
+      keyboard:
+        topic   : cmd_vel_keyboard
+        timeout : 0.5
+        priority: 100

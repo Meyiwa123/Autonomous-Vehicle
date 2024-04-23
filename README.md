@@ -47,6 +47,20 @@ This project aims to create an autonomous vehicle capable of executing critical 
     * Set ipv4 address to `192.168.1.77` and subnet to `255.255.255.0`
 2. Configure the LiDAR in your browse at `http://192.168.1.201/`
 
+## Set-up Zed Ros Wrapper
+To install the zed_ros2_wrapper, open a bash terminal, clone the package from Github, and build it:
+```
+mkdir -p ~/ros2_ws/src/ # create your workspace if it does not exist
+cd ~/ros2_ws/src/ #use your current ros2 workspace folder
+git clone  --recursive https://github.com/stereolabs/zed-ros2-wrapper.git
+cd ..
+sudo apt update
+rosdep install --from-paths src --ignore-src -r -y # install dependencies
+colcon build --symlink-install --cmake-args=-DCMAKE_BUILD_TYPE=Release --parallel-workers $(nproc) # build the workspace
+echo source $(pwd)/install/local_setup.bash >> ~/.bashrc # automatically source the installation in every new bash (optional)
+source ~/.bashrc
+```
+
 ## Launch Packgae
 There are multiple launch packages, each with its specific purpose:
 * The command `ros2 launch av gps_navigation.launch.py` orchestrates the setup and execution of nodes related to GPS-based navigation in an autonomous vehicle context. 

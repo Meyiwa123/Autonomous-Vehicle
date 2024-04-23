@@ -55,38 +55,36 @@ def generate_launch_description():
         }.items(),
     )
 
-    zed_ros2_cmd = Node(
-        package='zed_wrapper',
-        executable='zed_wrapper_node',
-        name='zed_wrapper',
-        output='screen',
-        parameters=[{'svo_file': '/path/to/svo_file.svo'}]
+    zed_ros2_cmd = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(get_package_share_directory('zed_wrapper'), 'launch', 'zed2.launch.py')
+        )
     )
 
     gps_navigation_cmd = Node(
         package='av',
-        executable='gps_navigation.py',
+        executable='gps_navigation',
         name='gps_navigation',
         output='screen'
     )
 
     dashboard_cmd = Node(
         package='av',
-        executable='dashboard.py',
+        executable='dashboard',
         name='dashboard',
         output='screen'
     )
 
     display_lane_cmd = Node(
         package='av',
-        executable='display_lane.py',
+        executable='display_lane',
         name='display_lane',
         output='screen'
     )
 
     lane_steer_cmd = Node(
         package='av',
-        executable='lane_steer.py',
+        executable='lane_steer',
         name='lane_steer',
         output='screen'
     )
@@ -100,7 +98,7 @@ def generate_launch_description():
 
     flysky_cmd = Node(
         package='av',
-        executable='flysky.py',
+        executable='flysky',
         name='flysky',
         output='screen'
     )

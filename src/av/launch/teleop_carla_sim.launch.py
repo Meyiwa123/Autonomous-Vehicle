@@ -7,8 +7,7 @@ def generate_launch_description():
         package='teleop_twist_keyboard',
         executable='teleop_twist_keyboard',
         name='teleop_twist_keyboard',
-        output='screen',
-        remappings=[('/cmd_vel', '/cmd_vel_keyboard')],
+        output='screen'    
     )
 
     lane_steer_node = Node(
@@ -25,17 +24,10 @@ def generate_launch_description():
         output='screen',
     )
 
-    carla_interface_ingress = Node(
+    carla_interface = Node(
         package='carla_interface',
-        executable='carla_interface_ingress',
-        name='carla_interface_ingress',
-        output='screen',
-    )
-
-    carla_interface_egress = Node(
-        package='carla_interface',
-        executable='carla_interface_egress',
-        name='carla_interface_egress',
+        executable='carla_interface',
+        name='carla_interface',
         output='screen',
     )
 
@@ -43,6 +35,5 @@ def generate_launch_description():
         teleop_twist_keyboard_node,
         lane_steer_node,
         display_lane_node,
-        carla_interface_ingress,
-        carla_interface_egress
+        carla_interface
     ])

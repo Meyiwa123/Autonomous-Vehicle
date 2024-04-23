@@ -18,6 +18,8 @@ class SteeringControllerNode(Node):
             'distance_threshold').value
 
         # Publishers and Subscribers
+        self.zed_image_subscription = self.create_subscription(
+            Image, 'zed/zed_node/rgb/image_rect_color', self.image_callback, 10)
         self.image_subscription = self.create_subscription(
             Image, 'image_topic', self.image_callback, 10)
         self.steering_publisher = self.create_publisher(

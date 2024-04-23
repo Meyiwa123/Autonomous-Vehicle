@@ -1,0 +1,3 @@
+# DetectedObjectArray.msg
+
+DetectedObject[] objects

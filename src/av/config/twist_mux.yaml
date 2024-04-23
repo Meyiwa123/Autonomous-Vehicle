@@ -5,6 +5,10 @@ twist_mux:
         topic   : cmd_vel
         timeout : 0.5
         priority: 10
+      radar:
+        topic   : radar_emergency_brake
+        timeout : 0.5
+        priority: 20
       flysky:
         topic   : cmd_vel_flysky
         timeout : 0.5

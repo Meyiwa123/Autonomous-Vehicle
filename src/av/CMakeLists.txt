@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(aav)
+project(av)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -10,6 +10,21 @@ find_package(ament_cmake REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
+
+# add custom message files
+find_package(message_generation REQUIRED)
+catkin_package(
+  CATKIN_DEPENDS message_runtime
+)
+add_message_files(
+  FILES
+  DetectedObject.msg
+  DetectedObjectArray.msg
+)
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

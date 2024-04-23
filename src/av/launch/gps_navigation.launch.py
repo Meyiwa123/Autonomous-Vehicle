@@ -1,11 +1,11 @@
 import os
 from launch_ros.actions import Node
 from launch import LaunchDescription
-from launch import LaunchDescription
 from nav2_common.launch import RewrittenYaml
 from launch.actions import IncludeLaunchDescription
 from ament_index_python.packages import get_package_share_directory
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+
 
 def generate_launch_description():
     velodyne_driver_node = Node(
@@ -34,19 +34,10 @@ def generate_launch_description():
         parameters=[os.path.join('config', 'neo_m8u_rover.yaml')]
     )
 
-    slam_toolbox_node = Node(
-        package='slam_toolbox',
-        executable='lifelong_launch.py',
-        name='slam_toolbox',
-        output='screen',
-        parameters=[{'use_sim_time': False}]
-    )
-
     robot_localization_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join('launch', 'dual_ekf_navsat.launch.py'))
     )
-
 
     bringup_dir = get_package_share_directory('nav2_bringup')
     nav2_params = os.path.join('config', "nav2_no_map_params.yaml")
@@ -64,12 +55,40 @@ def generate_launch_description():
         }.items(),
     )
 
-    teleop_twist_keyboard_node = Node(
-        package='teleop_twist_keyboard',
-        executable='teleop_twist_keyboard',
-        name='teleop_twist_keyboard',
+    zed_ros2_cmd = Node(
+        package='zed_wrapper',
+        executable='zed_wrapper_node',
+        name='zed_wrapper',
         output='screen',
-        remappings=[('/cmd_vel', '/cmd_vel_keyboard')],
+        parameters=[{'svo_file': '/path/to/svo_file.svo'}]
+    )
+
+    gps_navigation_cmd = Node(
+        package='av',
+        executable='gps_navigation.py',
+        name='gps_navigation',
+        output='screen'
+    )
+
+    dashboard_cmd = Node(
+        package='av',
+        executable='dashboard.py',
+        name='dashboard',
+        output='screen'
+    )
+
+    display_lane_cmd = Node(
+        package='av',
+        executable='display_lane.py',
+        name='display_lane',
+        output='screen'
+    )
+
+    lane_steer_cmd = Node(
+        package='av',
+        executable='lane_steer.py',
+        name='lane_steer',
+        output='screen'
     )
 
     twist_mux_params = os.path.join('config', 'twist_mux.yaml')
@@ -79,28 +98,25 @@ def generate_launch_description():
         parameters=[twist_mux_params],
     )
 
-    # Get a list of all Python files in the source directory
-    source_files = [f for f in os.listdir('src') if f.endswith('.py')]
-    # Create a Node for each Python file
-    nodes = [
-        Node(
-            package='aav',
-            executable=f,
-            name=f'{f[:-3]}_node',
-            output='screen'
-        )
-        for f in source_files
-    ]
+    flysky_cmd = Node(
+        package='av',
+        executable='flysky.py',
+        name='flysky',
+        output='screen'
+    )
 
     return LaunchDescription([
         velodyne_driver_node,
         velodyne_transform_node,
         velodyne_laserscan_node,
         ublox_node,
-        #slam_toolbox_node,
         navigation2_cmd,
-        teleop_twist_keyboard_node,
         robot_localization_cmd,
+        zed_ros2_cmd,
+        gps_navigation_cmd,
+        dashboard_cmd,
+        display_lane_cmd,
+        lane_steer_cmd,
         twist_mux,
-        *nodes
+        flysky_cmd
     ])

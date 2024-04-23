@@ -2,7 +2,7 @@ import can
 import math
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import Float64
+from std_msgs.msg import Float32
 from geometry_msgs.msg import Twist, Point32
 from teleop_twist_keyboard.msg import TwistStamped
 
@@ -25,7 +25,7 @@ class CANController(Node):
             self.flysky_callback,
             10)
         self.subscription = self.create_subscription(
-            Float64,
+            Float32,
             'lane_steering_angle',
             self.lane_angle_callback,
             10)

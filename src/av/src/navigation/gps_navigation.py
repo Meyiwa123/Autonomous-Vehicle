@@ -1,9 +1,9 @@
 import rclpy
 import time
 import openrouteservice
-from openrouteservice import convert
 from rclpy.node import Node
-from std_msgs.msg import Float32
+from openrouteservice import convert
+from sensor_msgs.msg import NavSatFix
 from nav2_simple_commander.robot_navigator import BasicNavigator
 from nav2_gps_waypoint_follower_demo.utils.gps_utils import latLonYaw2Geopose
 
@@ -11,32 +11,15 @@ class GpsWaypointCommander(Node):
     def __init__(self):
         super().__init__('gps_waypoint_commander')
         self.navigator = BasicNavigator("basic_navigator")
-        self.latitude_subscriber = self.create_subscription(
-            Float32, 'latitude', self.latitude_callback, 10)
-        self.longitude_subscriber = self.create_subscription(
-            Float32, 'longitude', self.longitude_callback, 10)
+        self.gps_subscriber = self.create_subscription(
+            NavSatFix, 'gps_coordinates', self.gps_callback, 10)
 
-        self.latitude = None
-        self.longitude = None
+        self.waypoints = None
         self.API_KEY = 'YOUR_API_KEY'
-        self.waypoints = None  # Initialize waypoints as None
 
-    def latitude_callback(self, msg):
-        self.latitude = msg.data
-        self._check_and_trigger_waypoint_processing()
-
-    def longitude_callback(self, msg):
-        self.longitude = msg.data
-        self._check_and_trigger_waypoint_processing()
-
-    def _check_and_trigger_waypoint_processing(self):
-        """
-        Checks if both latitude and longitude are received,
-        then calls get_waypoints and wp_callback.
-        """
-        if self.latitude is not None and self.longitude is not None:
-            self.get_waypoints_from_coordinates(self.latitude, self.longitude)
-            self.wp_callback()
+    def gps_callback(self, msg):
+        self.get_waypoints_from_coordinates(msg.latitude, msg.longitude)
+        self.wp_callback()
 
     def get_waypoints_from_coordinates(self, latitude, longitude):
         try:

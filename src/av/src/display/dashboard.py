@@ -5,6 +5,7 @@ from rclpy.node import Node
 from tkinter import messagebox
 from std_msgs.msg import Float32
 from geopy.geocoders import Photon
+from sensor_msgs.msg import NavSatFix
 
 class AutowareDashboard(Node):
     def __init__(self, master):
@@ -20,10 +21,8 @@ class AutowareDashboard(Node):
         self.get_logger().info('Dashboard node initialized')
 
         # ROS2 publishers
-        self.lat_publisher = self.node.create_publisher(
-            Float32, 'latitude', 10)
-        self.lon_publisher = self.node.create_publisher(
-            Float32, 'longitude', 10)
+        self.coordinate_publisher = self.node.create_publisher(
+            NavSatFix, 'gps_coordinates', 10)
 
         # TKinter initialization
         self.master = master
@@ -85,12 +84,10 @@ class AutowareDashboard(Node):
             messagebox.showerror("Error", f"Error: {str(e)}")
 
     def publish_coordinates(self, lat, lon):
-        lat_msg = Float32()
-        lon_msg = Float32()
-        lat_msg.data = lat
-        lon_msg.data = lon
-        self.lat_publisher.publish(lat_msg)
-        self.lon_publisher.publish(lon_msg)
+        coordinate_msg = NavSatFix()
+        coordinate_msg.latitude = lat
+        coordinate_msg.longitude = lon
+        self.coordinate_publisher.publish(coordinate_msg)
 
     def speed_callback(self, msg):
         speed = msg.data

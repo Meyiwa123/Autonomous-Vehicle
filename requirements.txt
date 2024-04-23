@@ -1,5 +1,7 @@
 python-can
+matplotlib
 tkinter
 serial
+numpy
 geopy
 re

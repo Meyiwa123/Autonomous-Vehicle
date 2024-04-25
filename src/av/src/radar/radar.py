@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import can
 import rclpy
 import cantools

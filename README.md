@@ -81,3 +81,4 @@ There are multiple launch packages, each with its specific purpose:
 ## Note
 1. If cloning the requried packages from Github and building them, you may encounter an error if your device runs out of memory (occasionally on virtual machines) because by default ROS uses a parallel build system to build packages concurrently. You should make use of `--parallel-workers` and/or `--executor sequential` to limit the parallel compilation.
 2. When using the flysky controller it is required to be connected through an arduino to the Jetson. This is because it cannot be directly connected as the Tx and Rx pins are used by the CAN.
+3. If scripts fail to run ensure they are executables with `chmod +x mypythonscript.py`

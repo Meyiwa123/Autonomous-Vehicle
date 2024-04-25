@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
+import re
 import rclpy
+import serial
 from rclpy.node import Node
 from geometry_msgs.msg import Point32
-import serial
-import re
 
 arduinoConnection = '/dev/ttyUSB0'
 
-
 def myMap(inMin, inMax, outMin, outMax, x):
     return int((x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin)
-
 
 class flysky_controller(Node):
     def __init__(self):
@@ -26,9 +24,6 @@ class flysky_controller(Node):
         self.steering_val_ = 0.0
         self.braking_val_ = 0.0
         self.gear = 0
-        self.throttle_last = 0
-        self.steering_last = 0
-        self.braking_last = 0
 
         self.get_logger().info("Flysky controller ready")
 
@@ -73,11 +68,9 @@ class flysky_controller(Node):
         self.get_logger().info("Sending command: " + str(cmd))
 
 
-def main(args=None):
-    rclpy.init(args=args)
-
+def main():
+    rclpy.init()
     node = flysky_controller()
-
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
@@ -86,7 +79,6 @@ def main(args=None):
         node.destroy_node()
         rclpy.shutdown()
         print('\nController shutdown cleanly')
-
 
 if __name__ == '__main__':
     main()

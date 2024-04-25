@@ -65,6 +65,8 @@ source ~/.bashrc
 There are multiple launch packages, each with its specific purpose:
 * The command `ros2 launch av gps_navigation.launch.py` orchestrates the setup and execution of nodes related to GPS-based navigation in an autonomous vehicle context. 
 * On the other hand, `ros2 launch av teleop_carla_sim.launch.py` initiates a teleoperation setup for controlling a vehicle within the Carla simulation environment.
+* The file `map_server.launch.py` launched a map server for displaying the Carleton 
+map, in which the data is stored in `map.pgm`.
 
 ## Additional Resources 
 1. [Ublox](https://github.com/KumarRobotics/ublox/tree/ros2)

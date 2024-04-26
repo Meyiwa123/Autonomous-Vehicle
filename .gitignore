@@ -1,3 +1,9 @@
+# Untack yolo
+*.pt
+
+# Untack map
+*.pgm
+
 # Compiled Python files
 *.pyc
 

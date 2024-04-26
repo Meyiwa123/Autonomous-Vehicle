@@ -19,7 +19,7 @@ def generate_launch_description():
 
     display_lane_node = Node(
         package='av',
-        executable='display_lane',
+        executable='display_lane.py',
         name='display_lane',
         output='screen',
     )

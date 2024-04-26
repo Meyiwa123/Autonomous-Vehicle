@@ -2,7 +2,7 @@
 import rclpy
 import py_trees
 import rclpy.node as Node
-from std_msgs.msg import Float64
+from std_msgs.msg import Twist
 from av_msgs.msg import DetectedObjectArray
 
 
@@ -15,7 +15,7 @@ class TrafficLightDetected(py_trees.behaviour.Behaviour):
         self._subscriber = node.create_subscription(
             DetectedObjectArray, 'detected_objects', self.detected_objects_callback, 10)
         self._publisher = node.create_publisher(
-            Float64, 'object_detection_brake', 10)
+            Twist, 'object_detection_brake', 10)
         self._traffic_light_detected = False
         self._distance = 0.0  # Initialize distance to 0
 
@@ -30,8 +30,9 @@ class TrafficLightDetected(py_trees.behaviour.Behaviour):
             else:
                 # Stop
                 print("Traffic light is not green. Stopping.")
-                msg = Float64()
-                msg.data = 100
+                msg = Twist()
+                msg.linear.x = 0
+                msg.angular.z = 0
                 self._publisher.publish(msg)
                 self._traffic_light_detected = False
                 return py_trees.common.Status.FAILURE
@@ -57,7 +58,7 @@ class StopSignDetected(py_trees.behaviour.Behaviour):
         self._subscriber = node.create_subscription(
             DetectedObjectArray, 'detected_objects', self.detected_objects_callback, 10)
         self._publisher = node.create_publisher(
-            Float64, 'object_detection_brake', 10)
+            Twist, 'object_detection_brake', 10)
         self._stop_sign_detected = False
         self._distance = 0.0  # Initialize distance to 0
 
@@ -65,8 +66,9 @@ class StopSignDetected(py_trees.behaviour.Behaviour):
         if self._stop_sign_detected and self._distance <= self.DISTANCE_THRESHOLD:
             # Stop for specified duration
             print("Stop sign detected within threshold distance. Stopping for 3 seconds.")
-            msg = Float64()
-            msg.data = 100
+            msg = Twist()
+            msg.linear.x = 0
+            msg.angular.z = 0
             self._publisher.publish(msg)
             self._stop_sign_detected = False
             return py_trees.common.Status.SUCCESS

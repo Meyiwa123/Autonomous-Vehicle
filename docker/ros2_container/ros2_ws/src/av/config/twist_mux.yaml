@@ -11,13 +11,13 @@ twist_mux:
         priority: 20
       radar:
         topic   : radar_emergency_brake
-        timeout : 0.5
+        timeout : 0.0
         priority: 30
       flysky:
-        topic   : cmd_vel_flysky
+        topic   : joy_cmd_vel
         timeout : 0.5
         priority: 50
       keyboard:
-        topic   : cmd_vel_keyboard
+        topic   : key_cmd_vel
         timeout : 0.5
         priority: 100
